@@ -1,0 +1,59 @@
+{
+  "rangosEntrada":{
+    "maxPersonasEnEntrada":1000,
+    "minPersonasEnEntrada":300
+  },
+  "probabilidades":{
+    "entrada":{
+      "posibilidadGramilla":0.80,
+      "posibilidadBaño":0.10,
+      "posibilidadTienda":0.10
+    },
+    "midTime":{
+      "posibilidadBaño":0.50,
+      "posibilidadTienda":0.50
+    }
+  },
+  "gramillaFull":false,
+  "cantidadDeBannos": 10,
+  
+  "timeAtPlace":[
+    {
+      "place":"bathroom",
+      "time":0.015
+    },
+    {
+      "place":"CompraDeBebidas",
+      "time":0.015
+    }
+  ],
+  "unidadSimulacion": "seconds",
+  "timeStep": 0.01,
+  "eventos": [
+        {
+            "time": 0.0,
+            "event_type": "startConcert"
+        },
+        {
+            "time": 1.5,
+            "event_type": "midTime",
+            "eventos_dentro":[
+              {
+                "irAlBanno":0.05,
+                "comprarComida":0.05
+              }
+            ]
+        },
+        {
+            "time": 3.0,
+            "event_type": "empiezaSalida",
+            "eventos_dentro":[
+              {
+                "salir":0.05
+              }
+            ]
+          
+        }        
+    ]
+  
+}
