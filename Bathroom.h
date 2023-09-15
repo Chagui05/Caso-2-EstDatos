@@ -1,6 +1,5 @@
 #ifndef _BATHROOM_
 #define _BATHROOM_ 1
-#include <iostream>
 #include <string>
 using namespace std;
 
@@ -9,6 +8,7 @@ private:
     int ID;
     bool occupied;
     int countBaths;
+    
 public:
     Bathroom(){
         ID = 402+countBaths;
