@@ -1,3 +1,5 @@
+//Clase para el manejo de la tienda del concierto, contiene un booleano de si esta abierta o no y uno de si esta el almacenamiento lleno o no
+
 #ifndef _STORE_
 #define _STORE_ 1
 #include <string>
@@ -6,12 +8,12 @@ using namespace std;
 class STORE {
 private: 
     bool open;
-    string storage
+    bool storageFull
     
 public:
     store(){
         open = false;
-        storage = "FULL"
+        storage = true
     }
     void setOpen(){
         open = true;
@@ -20,12 +22,7 @@ public:
         return open;
     }
     void setStorage(){
-        if (storage == "FULL"){
-            storage == "EMPTY"
-        }
-        else{
-            storage == "FULL"
-        }
+        storage = !storage 
     }
 };
 

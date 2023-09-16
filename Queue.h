@@ -1,3 +1,5 @@
+//Clase para el manejo de colas
+
 #ifndef _QUEUE_
 #define _QUEUE_ 1
 

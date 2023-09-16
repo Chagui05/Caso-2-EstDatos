@@ -1,3 +1,5 @@
+//Clase para el manejo de nodos
+
 #ifndef _NODE_
 #define _NODE_ 1
 using namespace std;

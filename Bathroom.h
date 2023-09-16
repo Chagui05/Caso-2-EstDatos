@@ -1,3 +1,5 @@
+//Clase para manejar los bathrooms, contienen un id, si esta ocupado o no y la cantidad de ellos que hay
+
 #ifndef _BATHROOM_
 #define _BATHROOM_ 1
 #include <string>

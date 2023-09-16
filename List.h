@@ -1,3 +1,5 @@
+// Clase para el manejo de multiple tipos de listas
+
 #ifndef _LIST_
 #define _LIST_ 1
 #include "Node.h"

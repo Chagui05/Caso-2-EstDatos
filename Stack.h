@@ -1,3 +1,5 @@
+//Clase para manejo de pilas
+
 #ifndef _STACK_ 
 #define _STACK_ 1
 
