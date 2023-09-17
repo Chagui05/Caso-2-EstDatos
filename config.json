@@ -16,7 +16,7 @@
   },
   "gramillaFull":false,
   "cantidadDeBannos": 10,
-  
+
   "timeAtPlace":[
     {
       "place":"bathroom",
@@ -32,13 +32,18 @@
   "eventos": [
         {
             "time": 0.0,
-            "event_type": "startConcert",
+            "event_type": "peopleEntering",
             "orderID":1
+        },
+        {
+            "time": 0.0,
+            "event_type": "startConcert",
+            "orderID":2
         },
         {
             "time": 1.5,
             "event_type": "midTime",
-            "orderID":2,
+            "orderID":3,
             "eventos_dentro":[
               {
                 "irAlBanno":0.05,
@@ -49,7 +54,7 @@
         {
             "time": 3.0,
             "event_type": "empiezaSalida",
-            "orderID":3,
+            "orderID":4,
             "eventos_dentro":[
               {
                 "salir":0.05
