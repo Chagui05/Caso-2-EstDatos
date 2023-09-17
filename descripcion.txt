@@ -1,0 +1,8 @@
+El programa comienza y las personas van a una cola en "entrada al concierto" en la cual se procesa una persona cada 30 segundos de ahí pueden tomar 3 rutas distintas a 
+"compra y venta de bebidas", “Gramilla/escenario”, “Baño”. Sin importar cual tomen siempre van a salir a “Gramilla/escenario” (excepto los que ya fueron directamente ahí).
+Hay un 80% de posibilidades que vayan a “Gramilla/escenario” la cual es una pila, y hay un 10% que vayan a “baño” o "compra y venta de bebidas", las cuales son colas donde 
+se saca una persona cada minuto y medio (no tienen prioridad).
+Una vez todas las personas estén en “Gramilla/escenario” el concierto empezará. Después de 90 minutos de concierto la persona que esté en la cima de “Gramilla/escenario” 
+tiene que salir (ocurre cada 30 segundos)de la pila e ir ya sea a “baño” o a "compra y venta de bebidas" (50% posibilidades C/u), para luego volver “Gramilla/escenario”. 
+Cuando faltan 30 minutos para que el concierto termine, ya nadie sale de “Gramilla/escenario”. Después de 3 horas el concierto termina, y se van desalojando a las personas 
+desde la pila hacia afuera (sale 1 cada 30 segundos), una vez hayan salido todos, finaliza el programa.
