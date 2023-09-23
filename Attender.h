@@ -1,22 +1,24 @@
-//Clase para manejar las personas que atienden a los conciertos, se le agrega un id unico a cada uno
+//Clase para manejar las personas que atienden a los conciertos, cada equivale a 50 personas, de esa manera se reduce el gasto de memoria
 
-#ifndef _STORE_
-#define _STORE_ 1
+#ifndef __ATTENDER__
+#define __ATTENDER__ 1
 
 using namespace std;
 
-class Attender{
+class AttenderGroup{
 
 private:
-    int attID;
-    int countAtt=0;
+    int groupID;
+    int countAt=0;
+
 public:
-    Attender(){
-        attID = 0+countAtt;
-        countAtt++;
+    AttenderGroup()
+    {
+        groupID = 10+countAt++;
+        
     };
     int getId(){
-        return attID;
+        return groupID;
     }
 
 };

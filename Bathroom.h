@@ -3,30 +3,25 @@
 #ifndef _BATHROOM_
 #define _BATHROOM_ 1
 #include <string>
+#include "listas/List.h"
+#include "attender.h"
+#include "waitingQueues.h"
+
 using namespace std;
 
-class Bathroom {
-private: 
+class Bathroom : public waitingQueues
+{
+private:
     int ID;
-    bool occupied;
-    int countBaths;
-    
+    int bathCOunt;
 public:
-    Bathroom(){
-        ID = 402+countBaths;
-        occupied = false;
-        countBaths++
-    }
-    void setOccupied(){
-        occupied = true;
-    }
-    bool getOccupied(){
-        return occupied;
-    }
-    int getID(){
-        return ID;
-    }
     
+    Bathroom():waitingQueues(50)
+    {
+        ID = 0;
+        bathCOunt++;
+    }
+
 };
 
 #endif

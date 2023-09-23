@@ -3,27 +3,28 @@
 #ifndef _STORE_
 #define _STORE_ 1
 #include <string>
+#include "listas/List.h"
+#include "attender.h"
+#include "waitingQueues.h"
+
 using namespace std;
 
-class STORE {
+class Store : public waitingQueues {
 private: 
+
+    int productCount;
+    bool outOfStock;
     bool open;
-    bool storageFull
-    
+
 public:
-    store(){
-        open = false;
-        storage = true
-    }
-    void setOpen(){
+
+    Store(int pProducount):waitingQueues(50)
+    {
+        outOfStock = false;
+        productCount = pProducount;
         open = true;
     }
-    bool getOpen(){
-        return open;
-    }
-    void setStorage(){
-        storage = !storage 
-    }
+    
 };
 
 #endif

@@ -1,30 +1,23 @@
 #ifndef _CONCERTENTRANCE_
 #define _CONCERTENTRANCE_ 1
 #include <string>
+#include "listas/List.h"
+#include "attender.h"
+#include "waitingQueues.h"
+
 using namespace std;
 
-class ConcertEntrance {
+class ConcertEntrance : public waitingQueues {
 private: 
-    bool full;
-    int maxOccupancy;
-    int spectatorsCount;
-public:
-    ConcertEntrance(){
-        full = false;
-        maxOccupancy = 1000;
-        spectatorsCount = 0;
-    }
 
-    void addToConcert(){
-        while( ;spectatorsCount <= maxOccupancy; spectatorsCount++ ){
-        }
-        full = true;
-    }
-    int getSpectatorCount(){
-        return spectatorsCount;
-    }
-    int getFull(){
-        return full;
+    int spectatorsCount;
+
+public:
+
+    ConcertEntrance(int maxOcuppancy):waitingQueues(maxOcuppancy)
+    {
+        spectatorsCount = 0;
     }
     
 };
+#endif

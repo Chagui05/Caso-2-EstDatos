@@ -14,9 +14,7 @@
       "posibilidadTienda":0.50
     }
   },
-  "gramillaFull":false,
   "cantidadDeBannos": 10,
-
   "timeAtPlace":[
     {
       "place":"bathroom",
