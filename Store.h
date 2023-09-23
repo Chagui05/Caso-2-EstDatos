@@ -28,28 +28,25 @@ public:
 
     void addToStoreQueue(AttenderGroup *attender)
     {
-        if (outOfStock && !open)
+        if (open)
         {
-            fillStore();
-            return;
+            addToWaitingQueue(attender);   
         }
-        addToWaitingQueue(attender);
     }
     void takeFromStoreQueue()
     {
-        if(productCount > 0)
-        { 
-            takeFromWaitingQueue();
-            productCount--;// hacer eso con un vector pila luego
-        }
-        else
+        if(productCount == 0 && !outOfStock)
         {
-            outOfStock = true;
+           outOfStock = true;
+           return;
         }
+        takeFromWaitingQueue();
+        productCount--; // <-- eso hacerlo con vector pila luego 
     }
 
     void fillStore()
     {
+        productCount = 50;
         outOfStock = false;
     }
     
