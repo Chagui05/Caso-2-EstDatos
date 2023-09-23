@@ -23,15 +23,34 @@ public:
         outOfStock = false;
         productCount = pProducount;
         open = true;
+
     }
 
     void addToStoreQueue(AttenderGroup *attender)
     {
         if (outOfStock && !open)
         {
+            fillStore();
             return;
         }
         addToWaitingQueue(attender);
+    }
+    void takeFromStoreQueue()
+    {
+        if(productCount > 0)
+        { 
+            takeFromWaitingQueue();
+            productCount--;// hacer eso con un vector pila luego
+        }
+        else
+        {
+            outOfStock = true;
+        }
+    }
+
+    void fillStore()
+    {
+        outOfStock = false;
     }
     
 };
