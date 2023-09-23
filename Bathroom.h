@@ -18,7 +18,7 @@ public:
     
     Bathroom():waitingQueues(50)
     {
-        ID = 0;
+        ID = rand() % (1000 + 1 - 0);
         bathCOunt++;
     }
 
