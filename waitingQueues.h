@@ -13,6 +13,7 @@ class waitingQueues
 private:
 
     bool full;
+    bool empty;
     int maxOccupancy;
     Queue<AttenderGroup> *waitingQueue;
 
@@ -20,17 +21,27 @@ public:
     waitingQueues(int pMaxOccupancy)
     {
         full = false;
+        empty = true;
         maxOccupancy = pMaxOccupancy;
         waitingQueue = new List<AttenderGroup>();
     }
 
     void addToWaitingQueue(AttenderGroup *attender)
     {
+        if (full)
+        {
+            return;
+        }
+        empty = false;
         waitingQueue->enqueue(attender);
     }
 
     AttenderGroup *takeFromWaitingQueue()
     {
+        if (!full)
+        {
+            return;
+        }   
         return waitingQueue->dequeue();
     }
 
@@ -42,6 +53,10 @@ public:
     void setFull()
     {
         full = true;
+    }
+    Queue<AttenderGroup>* getWaitingQueue()
+    {
+        return waitingQueue;
     }
 };
 #endif

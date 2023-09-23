@@ -24,6 +24,15 @@ public:
         productCount = pProducount;
         open = true;
     }
+
+    void addToStoreQueue(AttenderGroup *attender)
+    {
+        if (outOfStock && !open)
+        {
+            return;
+        }
+        addToWaitingQueue(attender);
+    }
     
 };
 

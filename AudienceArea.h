@@ -14,7 +14,7 @@ class AudienceAre: public waitingQueues {
 private: 
     
 public:
-       
+        
     AudienceAre(int pMaxOccupancy):waitingQueues(pMaxOccupancy)
     {
     }
