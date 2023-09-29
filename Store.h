@@ -26,6 +26,7 @@ public:
 
     }
 
+    //Hilo de entrada
     void addToStoreQueue(AttenderGroup *attender)
     {
         if (open)

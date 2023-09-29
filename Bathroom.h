@@ -16,7 +16,7 @@ private:
     int bathCOunt;
 public:
     
-    Bathroom():waitingQueues(50)
+    Bathroom():waitingQueues(10)
     {
         ID = rand() % (1000 + 1 - 0);
         bathCOunt++;
