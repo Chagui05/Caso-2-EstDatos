@@ -33,9 +33,17 @@ public:
         {
             return;
         }
+        
         empty = false;
         wQueue->enqueue(attender);
+
+        if (maxOccupancy == wQueue->getSize())
+        {
+            full = true;
+        }
     }
+
+
     
     //hilo
     void addQuantityToWaitingQueue(int quantity)
@@ -58,6 +66,11 @@ public:
             return;
         }   
         return wQueue->dequeue();
+        if (0 == wQueue->getSize())
+        {
+            empty = true;
+            full = false;
+        }
     }
 
     bool getFull()

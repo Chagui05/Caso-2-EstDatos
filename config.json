@@ -4,6 +4,7 @@
     "minPersonasEnEntrada":300,
     "velocidadEntrada":0.25
   },
+  "canitdadDeColasDeEntrada": 4,
   "probabilidades":{
     "entrada":{
       "posibilidadGramilla":0.80,

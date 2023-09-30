@@ -1,5 +1,4 @@
 //Clase para el manejo de la tienda del concierto, contiene un booleano de si esta abierta o no y uno de si esta el almacenamiento lleno o no
-
 #ifndef _STORE_
 #define _STORE_ 1
 #include <string>
