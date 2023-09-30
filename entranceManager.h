@@ -2,6 +2,7 @@
 #include <fstream>
 #include <thread>
 #include "json.hpp"
+#include "jsonManager.h"
 #include "ConcertEntrance.h"
 
 using namespace std;
@@ -23,14 +24,12 @@ public:
     entranceManager(){
         entrada = new vector<ConcertEntrance>;
 
-        std::ifstream jsonFile("config.json");
-        json jsonData;
-        jsonFile >> jsonData;
+        Config config = loadConfig("config.json")
 
-        maxPersonas = jsonData["rangosEntrada"]["maxPersonasEnEntrada"];
-        minPersonas = jsonData["rangosEntrada"]["minPersonasEnEntrada"];
-        velocidadEntrada = jsonData["rangosEntrada"]["velocidadEntrada"];
-        cantidadColasDeEntradas = jsonData["canitdadDeColasDeEntrada"];
+        maxPersonas = config.maxPersonasEntrada;
+        minPersonas = config.minPersonasEnEntrada;
+        velocidadEntrada = config.velocidadEntrada;
+        cantidadColasDeEntradas = config.cantidadDeColasEntrada;
         
         cantidadDeGrupos = rand() % (maxPersonas - minPersonas + 1) + minPersonas;
 
