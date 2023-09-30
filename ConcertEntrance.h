@@ -7,14 +7,14 @@
 
 using namespace std;
 
-class ConcertEntrance : public waitingQueues {
+class ConcertEntrance : public waitingQueue {
 private: 
 
     int spectatorsCount;
 
 public:
 
-    ConcertEntrance(int maxOcuppancy):waitingQueues(maxOcuppancy)
+    ConcertEntrance(int maxOcuppancy):waitingQueue(maxOcuppancy)
     {
         spectatorsCount = 0;
     }

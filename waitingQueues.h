@@ -8,22 +8,22 @@
 
 using namespace std;
 
-class waitingQueues 
+class waitingQueue 
 {
 private:
 
     bool full;
     bool empty;
     int maxOccupancy;
-    Queue<AttenderGroup> *waitingQueue;
+    Queue<AttenderGroup> *wQueue;
 
 public:
-    waitingQueues(int pMaxOccupancy)
+    waitingQueue(int pMaxOccupancy)
     {
         full = false;
         empty = true;
         maxOccupancy = pMaxOccupancy;
-        waitingQueue = new List<AttenderGroup>();
+        wQueue = new List<AttenderGroup>();
     }
 
     
@@ -34,7 +34,7 @@ public:
             return;
         }
         empty = false;
-        waitingQueue->enqueue(attender);
+        wQueue->enqueue(attender);
     }
     
     //hilo
@@ -47,7 +47,7 @@ public:
         empty = false;
         for (int i = 0; i < quantity; i++)
         {
-            waitingQueue->enqueue(new AttenderGroup());
+            wQueue->enqueue(new AttenderGroup());
         }
     }
 
@@ -57,7 +57,7 @@ public:
         {
             return;
         }   
-        return waitingQueue->dequeue();
+        return wQueue->dequeue();
     }
 
     bool getFull()
@@ -71,7 +71,7 @@ public:
     }
     Queue<AttenderGroup>* getWaitingQueue()
     {
-        return waitingQueue;
+        return wQueue;
     }
 };
 #endif

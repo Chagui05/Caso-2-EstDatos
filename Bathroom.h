@@ -9,14 +9,14 @@
 
 using namespace std;
 
-class Bathroom : public waitingQueues
+class Bathroom : public waitingQueue
 {
 private:
     int ID;
     int bathCOunt;
 public:
     
-    Bathroom():waitingQueues(10)
+    Bathroom():waitingQueue(10)
     {
         ID = rand() % (1000 + 1 - 0);
         bathCOunt++;

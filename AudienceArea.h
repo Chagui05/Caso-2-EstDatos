@@ -6,19 +6,75 @@
 #include <thread>
 #include "listas/List.h"
 #include "attender.h"
-#include "waitingQueues.h"
 
 using namespace std;
 
-class AudienceAre: public waitingQueues {
+class AudienceArea
+{
 private: 
-    
+
+    bool full;
+    bool empty;
+    int maxOccupancy;
+    Stack<AttenderGroup> *wStack;
+
 public:
         
-    AudienceAre(int pMaxOccupancy):waitingQueues(pMaxOccupancy)
+    AudienceArea(int pMaxOccupancy)
     {
+        full = false;
+        empty = true;
+        maxOccupancy = pMaxOccupancy;
+        wStack = new List<AttenderGroup>();
+    }
+
+    
+    void addToWaitingQueue(AttenderGroup *attender)
+    {
+        if (full)
+        {
+            return;
+        }
+        empty = false;
+        wStack->push(attender);
     }
     
-};
+    //hilo
+    void addQuantityToWaitingQueue(int quantity)
+    {
+        if (full)
+        {
+            return;
+        }
+        empty = false;
+        for (int i = 0; i < quantity; i++)
+        {
+            wStack->push(new AttenderGroup());
+        }
+    }
 
+    AttenderGroup *takeFromWaitingQueue()
+    {
+        if (!full)
+        {
+            return;
+        }   
+        return wStack->pop();
+    }
+
+    bool getFull()
+    {
+        return full;
+    }
+
+    void setFull()
+    {
+        full = true;
+    }
+
+    Stack<AttenderGroup>* getWaitingQueue()
+    {
+        return wStack;
+    }
+};
 #endif

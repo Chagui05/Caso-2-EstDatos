@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class Store : public waitingQueues {
+class Store : public waitingQueue {
 private: 
 
     int productCount;
@@ -18,7 +18,7 @@ private:
 
 public:
 
-    Store(int pProducount):waitingQueues(50)
+    Store(int pProducount):waitingQueue(50)
     {
         outOfStock = false;
         productCount = pProducount;
