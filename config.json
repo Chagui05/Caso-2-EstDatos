@@ -1,7 +1,8 @@
 {
   "rangosEntrada":{
     "maxPersonasEnEntrada":1000,
-    "minPersonasEnEntrada":300
+    "minPersonasEnEntrada":300,
+    "velocidadEntrada":0.25
   },
   "probabilidades":{
     "entrada":{
