@@ -18,6 +18,8 @@ public:
     {
         spectatorsCount = 0;
     }
+
+    
     
 };
 #endif

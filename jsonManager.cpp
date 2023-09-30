@@ -15,7 +15,6 @@ int main() {
     // Acceder a los valores del JSON
     int maxPersonasEnEntrada = jsonData["rangosEntrada"]["maxPersonasEnEntrada"];
     int minPersonasEnEntrada = jsonData["rangosEntrada"]["minPersonasEnEntrada"];
-    bool gramillaFull = jsonData["gramillaFull"];
     int cantidadDeBannos = jsonData["cantidadDeBannos"];
 
     // Acceder a los valores dentro de "probabilidades"

@@ -26,6 +26,7 @@ public:
         waitingQueue = new List<AttenderGroup>();
     }
 
+    
     void addToWaitingQueue(AttenderGroup *attender)
     {
         if (full)
@@ -34,6 +35,20 @@ public:
         }
         empty = false;
         waitingQueue->enqueue(attender);
+    }
+    
+    //hilo
+    void addQuantityToWaitingQueue(int quantity)
+    {
+        if (full)
+        {
+            return;
+        }
+        empty = false;
+        for (int i = 0; i < quantity; i++)
+        {
+            waitingQueue->enqueue(new AttenderGroup());
+        }
     }
 
     AttenderGroup *takeFromWaitingQueue()
