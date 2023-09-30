@@ -33,7 +33,7 @@ public:
         {
             return;
         }
-        
+
         empty = false;
         wQueue->enqueue(attender);
 
@@ -45,8 +45,7 @@ public:
 
 
     
-    //hilo
-    void addQuantityToWaitingQueue(int quantity)
+/*    void addQuantityToWaitingQueue(int quantity)
     {
         if (full)
         {
@@ -58,7 +57,7 @@ public:
             wQueue->enqueue(new AttenderGroup());
         }
     }
-
+*/
     AttenderGroup *takeFromWaitingQueue()
     {
         if (!full)
