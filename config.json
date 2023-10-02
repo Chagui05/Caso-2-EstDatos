@@ -8,11 +8,11 @@
   "probabilidades":{
     "entrada":{
       "posibilidadGramilla":0.80,
-      "posibilidadBaño":0.10,
+      "posibilidadBanno":0.10,
       "posibilidadTienda":0.10
     },
     "midTime":{
-      "posibilidadBaño":0.50,
+      "posibilidadBanno":0.50,
       "posibilidadTienda":0.50
     }
   },
