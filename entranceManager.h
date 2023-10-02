@@ -8,7 +8,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-class entranceManager
+class EntranceManager
 {
 private:
 
@@ -21,12 +21,12 @@ private:
 
 public:
 
-    entranceManager(){
+    EntranceManager()
+    {
         entrada = new vector<ConcertEntrance>;
+        Config config = loadConfig("config.json");
 
-        Config config = loadConfig("config.json")
-
-        maxPersonas = config.maxPersonasEntrada;
+        maxPersonas = config.maxPersonasEnEntrada;
         minPersonas = config.minPersonasEnEntrada;
         velocidadEntrada = config.velocidadEntrada;
         cantidadColasDeEntradas = config.cantidadDeColasEntrada;
@@ -39,17 +39,20 @@ public:
     }
 
     // será un hilo
-    void addToEntrance(){
+    void addToEntrance()
+    {
         while(cantidadDeGrupos > 0){
-            for (int j = 0; j < cantidadColasDeEntradas; j++){
+            for (int j = 0; j < cantidadColasDeEntradas && cantidadDeGrupos > 0; j++){
 
                 entrada->at(j).addToWaitingQueue(new AttenderGroup());
                 //std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));  
-                if(cantidadDeGrupos > 0 ){
-                    cantidadDeGrupos--;
-                }   
+                cantidadDeGrupos--;
             }
         }
+    }
+
+    vector<ConcertEntrance>* getEntrance(){
+        return entrada;
     }
 
 };
