@@ -33,6 +33,7 @@ public:
             addToWaitingQueue(attender);   
         }
     }
+    
     void takeFromStoreQueue()
     {
         if(productCount == 0 && !outOfStock)

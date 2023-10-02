@@ -2,9 +2,11 @@
   "rangosEntrada":{
     "maxPersonasEnEntrada":1000,
     "minPersonasEnEntrada":300,
-    "velocidadEntrada":0.25
+    "velocidadEntrada":0.25,
+    "velocidadSalidaSort":0.3
   },
   "canitdadDeColasDeEntrada": 4,
+  "cantidadDeProductos": 4,
   "probabilidades":{
     "entrada":{
       "posibilidadGramilla":0.80,
@@ -17,6 +19,7 @@
     }
   },
   "cantidadDeBannos": 10,
+  "cantidadDeStore": 10,
   "timeAtPlace":[
     {
       "place":"bathroom",
