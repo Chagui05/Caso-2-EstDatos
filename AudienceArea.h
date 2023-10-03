@@ -29,7 +29,7 @@ public:
     }
 
     
-    void addToWaitingQueue(AttenderGroup *attender)///es pila
+    void addToWaitingStack(AttenderGroup *attender)
     {
         if (full)
         {
@@ -40,7 +40,7 @@ public:
     }
     
     //hilo
-    void addQuantityToWaitingQueue(int quantity)
+    void addQuantityToWaitingStack(int quantity)
     {
         if (full)
         {
@@ -53,7 +53,7 @@ public:
         }
     }
 
-    AttenderGroup *takeFromWaitingQueue()
+    AttenderGroup *takeFromWaitingStack()
     {
         if (!full)
         {
@@ -72,9 +72,16 @@ public:
         full = true;
     }
 
-    Stack<AttenderGroup>* getWaitingQueue()
+    bool getEmpty()
+    {
+        return empty;
+    }
+
+    Stack<AttenderGroup>* getWaitingStack()
     {
         return wStack;
     }
+
+
 };
 #endif
