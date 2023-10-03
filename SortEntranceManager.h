@@ -22,6 +22,8 @@ private:
     double posibilidadGramilla;
     double posibilidadBanno; 
     double posibilidadTienda;
+    int cantidadCubiculos;
+    int cantidadCajeros;
     vector<ConcertEntrance>* colasActivas;
     QueueManager* queueManager;
     //elementos donde se sortea
@@ -41,35 +43,55 @@ public:
         posibilidadGramilla = config.posibilidadGramilla;
         posibilidadBanno = config.posibilidadBanno;
         posibilidadTienda = config.posibilidadTienda;
+        cantidadCajeros = config.cantidadDeCajeros
+        cantidadCubiculos = config.cantidadDeCubiculos;
     }
 
     //será un hilo
     void sortToBathStoreAudience()
     {
-        while(gruposPorEntrar > 0){
+        int numGruposPorEntrar = gruposPorEntrar;
 
-            for(int j = 0; j < colasActivas->size() && gruposPorEntrar > 0 ; j++){
+        while (numGruposPorEntrar > 0)
+        {
+            // Generar un numero aleatorio entre 200 y 500 para el tamaño del proximo grupo
 
+            int sizeGrupo = rand() % 301 + 200;
+            // Numero generado de la cantidad de cajeros y de bannos
+            int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2
+
+            // Dividir el grupo en subgrupos
+            int numSubgrupos = sizeGrupo / divisorSubgrupos;
+            if (sizeGrupo % 80 != 0)
+            {
+                numSubgrupos++;
+            }
+
+            // Distribuir aleatoriamente los subgrupos en las areas
+            for (int i = 0; i < numSubgrupos; i++)
+            {
                 float randomNum = static_cast<float>(rand()) / RAND_MAX;
                 AttenderGroup* grupo = colasActivas->at(j).takeFromWaitingQueue();
 
-                if (randomNum < posibilidadGramilla) {
+                if (randomNum < posibilidadGramilla)
+                {
                     queueManager->getAudienceArea()->addToWaitingQueue(grupo);
-                } 
-                else if (randomNum < posibilidadGramilla + posibilidadBanno) {
-                    queueManager->addToBath(grupo);   
-                } 
-                else 
+                }
+                else if (randomNum < posibilidadGramilla + posibilidadBanno)
+                {
+                    queueManager->addToBath(grupo);
+                }
+                else
                 {
                     queueManager->addToStore(grupo);
                 }
-                gruposPorEntrar--;
-                //std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));  
-            }
-            
-        }
 
+                // Reducir la cantidad de grupos que deben entrar
+                numGruposPorEntrar--;
+            }
+        }
     }
+
 
     //será un hilo
     void addToAudienciaFromBath()

@@ -11,7 +11,9 @@ struct Config {
     double velocidadEntrada;
     double velocidadSalidaSort;
     int cantidadDeBannos;
+    int cantidadDeCubiculos;
     int cantidadDeStore;
+    int cantidadDeCajeros;
     int cantidadDeProductos;
     int cantidadDeColasEntrada;
     double posibilidadGramilla;
@@ -36,7 +38,9 @@ Config loadConfig(string configFile) {
     config.velocidadEntrada = jsonData["rangosEntrada"]["velocidadEntrada"];
     config.velocidadSalidaSort = jsonData["rangosEntrada"]["velocidadSalidaSort"];
     config.cantidadDeBannos = jsonData["cantidadDeBannos"];
+    config.cantidadDeCubiculos = jsonData["cantidadDeCubiculos"];
     config.cantidadDeStore = jsonData["cantidadDeStore"];
+    config.cantidadDeCajeros = jsonData["cantidadDeCajeros"];
     config.cantidadDeProductos = jsonData["cantidadDeProductos"];
     config.cantidadDeColasEntrada = jsonData["canitdadDeColasDeEntrada"];
     config.posibilidadGramilla = jsonData["probabilidades"]["entrada"]["posibilidadGramilla"];

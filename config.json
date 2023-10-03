@@ -19,7 +19,9 @@
     }
   },
   "cantidadDeBannos": 10,
+  "cantidadDeCubiculos":4,
   "cantidadDeStore": 10,
+  "cantidadDeCajeros": 4,
   "timeAtPlace":[
     {
       "place":"bathroom",
