@@ -47,50 +47,39 @@ public:
         cantidadCubiculos = config.cantidadDeCubiculos;
     }
 
+
+
     //será un hilo
     void sortToBathStoreAudience()
     {
-        int numGruposPorEntrar = gruposPorEntrar;
+        int sizeGrupo = rand() % 301 + 200;
+        int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2
+        vector<AttenderGroup> subgrupos;
 
-        while (numGruposPorEntrar > 0)
-        {
-            // Generar un numero aleatorio entre 200 y 500 para el tamaño del proximo grupo
+        int subgrupoSize = grupo->size / divisorSubgrupos;
 
-            int sizeGrupo = rand() % 301 + 200;
-            // Numero generado de la cantidad de cajeros y de bannos
-            int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2
+        for (int i = 0; i < divisorSubgrupos; i++) {
+            subgrupos.push_back(new AttenderGroup(subgrupoSize));
+        }
 
-            // Dividir el grupo en subgrupos
-            int numSubgrupos = sizeGrupo / divisorSubgrupos;
-            if (sizeGrupo % 80 != 0)
-            {
-                numSubgrupos++;
+        for (int i = 0; !subgrupos.empty();i++){
+            int random = rand() % 100 + 1;
+            if (random <= posibilidadGramilla){
+                queueManager->getAudienceArea()->addToWaitingQueue(subgrupos.back());
+                subgrupos.pop_back();
             }
-
-            // Distribuir aleatoriamente los subgrupos en las areas
-            for (int i = 0; i < numSubgrupos; i++)
-            {
-                float randomNum = static_cast<float>(rand()) / RAND_MAX;
-                AttenderGroup* grupo = colasActivas->at(j).takeFromWaitingQueue();
-
-                if (randomNum < posibilidadGramilla)
-                {
-                    queueManager->getAudienceArea()->addToWaitingQueue(grupo);
-                }
-                else if (randomNum < posibilidadGramilla + posibilidadBanno)
-                {
-                    queueManager->addToBath(grupo);
-                }
-                else
-                {
-                    queueManager->addToStore(grupo);
-                }
-
-                // Reducir la cantidad de grupos que deben entrar
-                numGruposPorEntrar--;
+            else if (random <= posibilidadGramilla + posibilidadBanno){
+                queueManager->getBathroom()->at(rand() % cantidadCubiculos).addToWaitingQueue(subgrupos.back());
+                subgrupos.pop_back();
+            }
+            else{
+                queueManager->getStore()->at(rand() % cantidadCajeros).addToWaitingQueue(subgrupos.back());
+                subgrupos.pop_back();
             }
         }
     }
+
+    
 
 
     //será un hilo

@@ -8,18 +8,22 @@ using namespace std;
 class AttenderGroup{
 
 private:
-    int groupID;
-    int countAt=0;
+        int groupID;
+        int countAt=0;
+        int size=50;
 
-public:
-    AttenderGroup()
-    {
-        groupID = 10+countAt++;
-        
-    };
-    int getId(){
-        return groupID;
-    }
+    public:
+        AttenderGroup(int size)
+        {
+            groupID = 10+countAt++;
+            this->size=size;
+        };
+        int getId(){
+            return groupID;
+        }
+        int getSize() const {
+            return size;
+        }
 
 };
 
