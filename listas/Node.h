@@ -36,7 +36,7 @@ public:
         return next;
     }
 
-    Node *getPrevious(){                    a
+    Node *getPrevious(){                    
         return previous; 
     }
 

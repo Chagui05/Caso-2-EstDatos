@@ -1,3 +1,6 @@
+#ifndef _JSONMANAGER_
+#define _JSONMANAGER_ 1
+
 #include <iostream>
 #include <fstream>
 #include "json.hpp"
@@ -82,3 +85,5 @@ Config loadConfig(string configFile) {
 
     return config;
 }
+
+#endif

@@ -55,4 +55,8 @@ public:
         return entrada;
     }
 
+    int getCantidadDeGrupos(){
+        return cantidadDeGrupos;
+    }
+
 };

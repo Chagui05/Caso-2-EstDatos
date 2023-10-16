@@ -57,7 +57,7 @@ public:
     {
         if (!full)
         {
-            return;
+            return nullptr;
         }   
         return wStack->pop();
     }
