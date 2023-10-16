@@ -53,10 +53,16 @@ public:
     //será un hilo
     void sortToBathStoreAudience()
     {
+<<<<<<< HEAD
         int sizeGrupo = rand() % 301 + 200;
         AttenderGroup* grupo = new AttenderGroup(sizeGrupo);
         int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2;
         vector<AttenderGroup>* subgrupos;
+=======
+        int sizeGrupo = rand() % 301 + 200; //Suponiendo que llegaran de 300 a 500 personas por llamada a la funcion
+        int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2
+        vector<AttenderGroup> subgrupos;
+>>>>>>> aebfccd196382d3b9b004113f01feafab58ed056
 
         int subgrupoSize = grupo->getSize() / divisorSubgrupos;
 
