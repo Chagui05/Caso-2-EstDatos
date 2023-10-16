@@ -52,7 +52,7 @@ public:
     //será un hilo
     void sortToBathStoreAudience()
     {
-        int sizeGrupo = rand() % 301 + 200;
+        int sizeGrupo = rand() % 301 + 200; //Suponiendo que llegaran de 300 a 500 personas por llamada a la funcion
         int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2
         vector<AttenderGroup> subgrupos;
 
