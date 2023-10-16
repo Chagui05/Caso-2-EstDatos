@@ -29,7 +29,7 @@ public:
     // será un hilo
     void takeToBath()
     {   
-        AttenderGroup* pAttender = audienciaPrincipal->takeFromWaitingQueue();
+        AttenderGroup* pAttender = audienciaPrincipal->takeFromWaitingStack();
         queueManager->addToBath(pAttender);
         //std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));
 
@@ -38,13 +38,13 @@ public:
     {
         for(int i = 0; i < queueManager->getBathroom()->size(); i++){
             AttenderGroup* grupo = queueManager->getBathroom()->at(i).takeFromWaitingQueue();
-            queueManager->getAudienceArea()->addToWaitingQueue(grupo);
+            queueManager->getAudienceArea()->addToWaitingStack(grupo);
             //std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
         }   
     }
     void takeToStore()
     {
-        AttenderGroup* pAttender = audienciaPrincipal->takeFromWaitingQueue();
+        AttenderGroup* pAttender = audienciaPrincipal->takeFromWaitingStack();
         queueManager->addToStore(pAttender);
         //std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));
     }
@@ -52,7 +52,7 @@ public:
     {
         for(int i = 0; i < queueManager->getStore()->size(); i++){
             AttenderGroup* grupo = queueManager->getStore()->at(i).takeFromWaitingQueue();
-            queueManager->getAudienceArea()->addToWaitingQueue(grupo);
+            queueManager->getAudienceArea()->addToWaitingStack(grupo);
             //std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
         }   
     }

@@ -44,7 +44,7 @@ public:
         while(cantidadDeGrupos > 0){
             for (int j = 0; j < cantidadColasDeEntradas && cantidadDeGrupos > 0; j++){
 
-                entrada->at(j).addToWaitingQueue(new AttenderGroup());
+                entrada->at(j).addToWaitingQueue(new AttenderGroup(50));
                 //std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));  
                 cantidadDeGrupos--;
             }

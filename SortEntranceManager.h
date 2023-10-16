@@ -37,13 +37,14 @@ public:
         colasActivas = pColasActivas;
         gruposPorEntrar = pGruposPorEntrar;
         queueManager = new QueueManager(gruposPorEntrar);
+
         Config config = loadConfig("config.json");
         
         velocidadSalidaSort = config.velocidadSalidaSort;
         posibilidadGramilla = config.posibilidadGramilla;
         posibilidadBanno = config.posibilidadBanno;
         posibilidadTienda = config.posibilidadTienda;
-        cantidadCajeros = config.cantidadDeCajeros
+        cantidadCajeros = config.cantidadDeCajeros;
         cantidadCubiculos = config.cantidadDeCubiculos;
     }
 
@@ -53,28 +54,30 @@ public:
     void sortToBathStoreAudience()
     {
         int sizeGrupo = rand() % 301 + 200;
-        int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2
-        vector<AttenderGroup> subgrupos;
+        AttenderGroup* grupo = new AttenderGroup(sizeGrupo);
+        int divisorSubgrupos = (cantidadCajeros+cantidadCubiculos)/2;
+        vector<AttenderGroup>* subgrupos;
 
-        int subgrupoSize = grupo->size / divisorSubgrupos;
+        int subgrupoSize = grupo->getSize() / divisorSubgrupos;
 
         for (int i = 0; i < divisorSubgrupos; i++) {
-            subgrupos.push_back(new AttenderGroup(subgrupoSize));
+            subgrupos->push_back(AttenderGroup(subgrupoSize));
         }
 
-        for (int i = 0; !subgrupos.empty();i++){
+        for (int i = 0; !subgrupos->empty();i++){
+            AttenderGroup* subGrupoAux = &subgrupos->back();
+            subgrupos->pop_back();
             int random = rand() % 100 + 1;
             if (random <= posibilidadGramilla){
-                queueManager->getAudienceArea()->addToWaitingQueue(subgrupos.back());
-                subgrupos.pop_back();
+                queueManager->getAudienceArea()->addToWaitingStack(subGrupoAux);
+
             }
             else if (random <= posibilidadGramilla + posibilidadBanno){
-                queueManager->getBathroom()->at(rand() % cantidadCubiculos).addToWaitingQueue(subgrupos.back());
-                subgrupos.pop_back();
+                queueManager->getBathroom()->at(rand() % cantidadCubiculos).addToWaitingQueue(subGrupoAux);
             }
             else{
-                queueManager->getStore()->at(rand() % cantidadCajeros).addToWaitingQueue(subgrupos.back());
-                subgrupos.pop_back();
+                queueManager->getStore()->at(rand() % cantidadCajeros).addToWaitingQueue(subGrupoAux);
+
             }
         }
     }
@@ -87,7 +90,7 @@ public:
     {
         for(int i = 0; i < queueManager->getBathroom()->size(); i++){
             AttenderGroup* grupo = queueManager->getBathroom()->at(i).takeFromWaitingQueue();
-            queueManager->getAudienceArea()->addToWaitingQueue(grupo);
+            queueManager->getAudienceArea()->addToWaitingStack(grupo);
             //std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
         }
         
@@ -96,7 +99,7 @@ public:
     {
         for(int i = 0; i < queueManager->getStore()->size(); i++){
             AttenderGroup* grupo = queueManager->getStore()->at(i).takeFromWaitingQueue();
-            queueManager->getAudienceArea()->addToWaitingQueue(grupo);
+            queueManager->getAudienceArea()->addToWaitingStack(grupo);
             //std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
         }
         

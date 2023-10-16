@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "json.hpp"
+using namespace std;
 
 using json = nlohmann::json;
 
@@ -24,6 +25,7 @@ struct Config {
 };
 
 Config loadConfig(string configFile) {
+
     // Leer el JSON desde un archivo
     std::ifstream jsonFile(configFile);
     json jsonData;

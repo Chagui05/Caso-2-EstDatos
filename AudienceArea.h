@@ -40,7 +40,7 @@ public:
     }
     
     //hilo
-    void addQuantityToWaitingStack(int quantity)
+    void addQuantityToWaitingStack(int quantity, int amountOfPEople)
     {
         if (full)
         {
@@ -49,7 +49,7 @@ public:
         empty = false;
         for (int i = 0; i < quantity; i++)
         {
-            wStack->push(new AttenderGroup());
+            wStack->push(new AttenderGroup(amountOfPEople));
         }
     }
 

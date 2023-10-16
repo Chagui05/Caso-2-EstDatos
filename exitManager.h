@@ -4,6 +4,7 @@
 #include <thread>
 #include "listas/List.h"
 #include "attender.h"
+#include "AudienceArea.h"
 
 using namespace std;
 
@@ -12,15 +13,15 @@ class exitManager
 private:
 
     bool timeToExit;
-    Stack<AttenderGroup> *wStack;
+    AudienceArea* audienciaASalir;
     int cantidadDeGrupos;
 
 public:
     
-        exitManager()
+        exitManager(AudienceArea* pAudienciaASalir)
         {
             timeToExit = false;
-            wStack = new List<AttenderGroup>();
+            audienciaASalir = pAudienciaASalir;
         }
     
         
@@ -28,19 +29,19 @@ public:
         void exit()
         {
             if (timeToExit != true){
-                return
-            };
+                return;
+            }
             else{
-                while (AudienceArea.getEmpty()!=False)
+                while (audienciaASalir->getEmpty() == false)
                 {
-                    for (int i = 0; i < wStack->getSize(); i++)
+                    for (int i = 0; i < audienciaASalir->getWaitingStack()->getSize(); i++)
                     {
-                        wStack->pop();
+                        audienciaASalir->takeFromWaitingStack();
                     }
                 }
             }
         }
 
-}
+};
 
 #endif
