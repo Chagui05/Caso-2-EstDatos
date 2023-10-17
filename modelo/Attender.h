@@ -9,14 +9,14 @@ class AttenderGroup{
 
 private:
         int groupID;
-        int countAt=0;
-        int size=50;
+        int countAt = 0;
+        int size;
 
-    public:
+public:
         AttenderGroup(int size)
         {
             groupID = 10+countAt++;
-            this->size=size;
+            this->size =size;
         };
         int getId(){
             return groupID;

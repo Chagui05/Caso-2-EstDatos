@@ -14,7 +14,7 @@ private:
 
     int maxPersonas;
     int minPersonas;
-    int cantidadDeGrupos;
+    int cantidadDePersonas;
     int cantidadColasDeEntradas;
     float velocidadEntrada;
     vector<ConcertEntrance>* entrada;
@@ -31,10 +31,10 @@ public:
         velocidadEntrada = config.velocidadEntrada;
         cantidadColasDeEntradas = config.cantidadDeColasEntrada;
         
-        cantidadDeGrupos = rand() % (maxPersonas - minPersonas + 1) + minPersonas;
+        cantidadDePersonas = rand() % (maxPersonas - minPersonas + 1) + minPersonas;
 
         for (int i = 0 ; i < cantidadColasDeEntradas; i++){
-            entrada->push_back(ConcertEntrance(cantidadDeGrupos / cantidadColasDeEntradas));
+            entrada->push_back(ConcertEntrance(cantidadDePersonas / cantidadColasDeEntradas));
         }   
     }
 

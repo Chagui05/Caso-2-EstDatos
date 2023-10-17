@@ -67,6 +67,8 @@ public:
         for (int i = 0; !subgrupos->empty();i++){
             AttenderGroup* subGrupoAux = &subgrupos->back();
             subgrupos->pop_back();
+
+            
             int random = rand() % 100 + 1;
             if (random <= posibilidadGramilla){
                 queueManager->getAudienceArea()->addToWaitingStack(subGrupoAux);

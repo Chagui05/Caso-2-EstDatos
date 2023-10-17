@@ -16,6 +16,7 @@ private:
     bool empty;
     int maxOccupancy;
     Queue<AttenderGroup> *wQueue;
+    
 
 public:
     waitingQueue(int pMaxOccupancy)
