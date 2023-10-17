@@ -54,23 +54,10 @@ public:
     }
 
 
-    void addToAudienciaFromBath()// logica manejada en funcion hilo de QueueManager
+    void addToAudiencia_FromBathAndStore()
     {
-        for (int i = 0; i < queueManager->getBathroom()->size(); i++)
-        {
-            AttenderGroup *grupo = queueManager->getBathroom()->at(i)->takeFromWaitingQueue();
-            queueManager->getAudienceArea()->addToWaitingStack(grupo);
-            // std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
-        }
-    }
-    void addToAudienciaFromStore()// logica manejada en funcion hilo de QueueManager
-    {
-        for (int i = 0; i < queueManager->getStore()->size(); i++)
-        {
-            AttenderGroup *grupo = queueManager->getStore()->at(i)->takeFromWaitingQueue();
-            queueManager->getAudienceArea()->addToWaitingStack(grupo);
-            // std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
-        }
+        queueManager->storeToAudiencia();// logica manejada en funcion hilo de QueueManager
+        queueManager->bathToAudiencia();// logica manejada en funcion hilo de QueueManager
     }
 
     QueueManager *getQueueManager()

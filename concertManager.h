@@ -14,7 +14,6 @@ class concertManager
 private:
 
     QueueManager* queueManager;
-    AudienceArea* audienciaPrincipal;
     float proccessDuration; //sacarlo del json
     float velocidadSalidaSort;
     double posibilidadGramilla;
@@ -28,14 +27,13 @@ public:
     concertManager(QueueManager* pQueueManager)
     {
         queueManager = pQueueManager;
-        audienciaPrincipal = queueManager->getAudienceArea();
         proccessDuration = 2.0;//cambiar y que se saque del json 
-        Config config = loadConfig("config.json");
+        Config config = Config("config.json");
         velocidadSalidaSort = config.velocidadSalidaSort;
         posibilidadGramilla = config.posibilidadGramilla;
         posibilidadBanno = config.posibilidadBanno;
         posibilidadTienda = config.posibilidadTienda;
-        cantidadStore = config.cantidadDeStore
+        cantidadStore = config.cantidadDeStore;
         cantidadBannos = config.cantidadDeBannos;
     }
 
@@ -43,8 +41,7 @@ public:
     void takeToBath()
     {   
         AttenderGroup* pAttenderGroup = audienciaPrincipal->takeFromWaitingQueue();
-
-        // Calcular el tamaño de cada subgrupo
+        
         int divisorSubgrupos = pAttenderGroup->getSize()/cantidadBannos
         int subgrupoSize = pAttenderGroup->getSize() / numSubgrupos;
         vector<AttenderGroup> subgrupos;

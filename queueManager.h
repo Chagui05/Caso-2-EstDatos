@@ -93,6 +93,26 @@ public:
             quantity -= personasPromedioPorGrupo;
         }
     }
+
+    void bathToAudiencia()//deber ser un hilo con tiempo de espera sacado del json
+    {
+        for (int i = 0; i < bannos->size(); i++)
+        {
+            AttenderGroup *grupo = bannos->at(i)->takeFromWaitingQueue();
+            audiencia->addToWaitingStack(grupo);
+            // std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
+        }
+    }
+
+    void storeToAudiencia()//deber ser un hilo con tiempo de espera sacado del json
+    {
+        for (int i = 0; i < tiendas->size(); i++)
+        {
+            AttenderGroup *grupo = tiendas->at(i)->takeFromWaitingQueue();
+            audiencia->addToWaitingStack(grupo);
+            // std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
+        }
+    }
     
     vector<Store *> *getStore()
     {
