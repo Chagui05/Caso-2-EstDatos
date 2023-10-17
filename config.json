@@ -3,7 +3,8 @@
     "maxPersonasEnEntrada":1000,
     "minPersonasEnEntrada":300,
     "velocidadEntrada":0.25,
-    "velocidadSalidaSort":0.3
+    "velocidadSalidaSort":0.3,
+    "personasPorEntrada":50
   },
   "canitdadDeColasDeEntrada": 4,
   "cantidadDeProductos": 4,

@@ -21,6 +21,7 @@ struct Config {
     int cantidadDeCajeros;
     int cantidadDeProductos;
     int cantidadDeColasEntrada;
+    int personasPorEntrada;
     double posibilidadGramilla;
     double posibilidadBanno;
     double posibilidadTienda;
@@ -39,6 +40,7 @@ Config (std::string configFile) {
     // Asignar los valores del JSON a la estructura Config
     maxPersonasEnEntrada = jsonData["rangosEntrada"]["maxPersonasEnEntrada"];
     minPersonasEnEntrada = jsonData["rangosEntrada"]["minPersonasEnEntrada"];
+    personasPorEntrada = jsonData["rangosEntrada"]["personasPorEntrada"];
     velocidadEntrada = jsonData["rangosEntrada"]["velocidadEntrada"];
     velocidadSalidaSort = jsonData["rangosEntrada"]["velocidadSalidaSort"];
     cantidadDeBannos = jsonData["cantidadDeBannos"];
@@ -50,6 +52,7 @@ Config (std::string configFile) {
     posibilidadGramilla = jsonData["probabilidades"]["entrada"]["posibilidadGramilla"];
     posibilidadBanno = jsonData["probabilidades"]["entrada"]["posibilidadBanno"];
     posibilidadTienda = jsonData["probabilidades"]["entrada"]["posibilidadTienda"];
+  
 
     for (const auto& entry : jsonData["timeAtPlace"]) {
         std::string place = entry["place"];
