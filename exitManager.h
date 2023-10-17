@@ -25,7 +25,7 @@ public:
     }
 
     // hilo
-    List<AttenderGroup>* exit()
+    List<AttenderGroup>* exit()//deber ser un hilo con tiempo de espera sacado del json
     {
         if (timeToExit == true)
         {
