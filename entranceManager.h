@@ -16,13 +16,14 @@ private:
     int cantidadDePersonas;
     int cantidadColasDeEntradas;
     int personasPorGrupo;
+    int cantidadDeAttenderGroup;
     float velocidadEntrada;
-    vector<ConcertEntrance> *entrada;
+    vector<ConcertEntrance*> *entrada;
 
 public:
     EntranceManager()
     {
-        entrada = new vector<ConcertEntrance>;
+        entrada = new vector<ConcertEntrance*>;
         Config* config = new Config("config.json");
 
         maxPersonas = config->maxPersonasEnEntrada;
@@ -37,26 +38,27 @@ public:
 
         for (int i = 0; i < cantidadColasDeEntradas; i++)
         {
-            entrada->push_back(ConcertEntrance(ocupacion));
+            entrada->push_back(new ConcertEntrance(ocupacion));
         }
     }
 
-    // será un hilo
-    void addToEntrance()
+    void addToEntrance()//debe ser un hilo con tiempo de espera sacado del json
     {
         while (cantidadDePersonas > 0)
         {
             for (int j = 0; j < cantidadColasDeEntradas && cantidadDePersonas > 0; j++)
             {
 
-                entrada->at(j).addToWaitingQueue(new AttenderGroup(personasPorGrupo));
+                entrada->at(j)->addToWaitingQueue(new AttenderGroup(personasPorGrupo));
+                cantidadDeAttenderGroup++;
                 // std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));
                 cantidadDePersonas-=personasPorGrupo;
+                
             }
         }
     }
 
-    vector<ConcertEntrance> *getEntrance()
+    vector<ConcertEntrance*> *getEntrance()
     {
         return entrada;
     }
@@ -64,5 +66,9 @@ public:
     int getCantidadDePersonas()
     {
         return cantidadDePersonas;
+    }
+    int cantidadDeAttenderGroup()
+    {
+        return cantidadDeAttenderGroup;
     }
 };

@@ -1,10 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <thread>
-#include "json.hpp"
 #include "jsonManager.h"
 #include "Store.h"
-#include  "Bathroom.h"
+#include "Bathroom.h"
 #include "AudienceArea.h"
 #include "attender.h"
 
@@ -14,71 +13,97 @@ using json = nlohmann::json;
 class QueueManager
 {
 private:
-
     int cantidadDeBannos;
     int cantidadDeStore;
     int cantidadDeProductos;
     int cantidadDeGrupos;
     int maxGrupos;
+    int personasPromedioPorGrupo;
     float velocidadEntrada;
-    vector<Store>* tiendas;
-    vector<Bathroom>* bannos;
-    AudienceArea* audiencia;
-
+    vector<Store*> *tiendas;
+    vector<Bathroom*> *bannos;
+    AudienceArea *audiencia;
 
 public:
-
     QueueManager(int pCantidadDeGrupos)
     {
-        tiendas = new vector<Store>;
-        bannos = new vector<Bathroom>;
+        tiendas = new vector<Store*>;
+        bannos = new vector<Bathroom*>;
         audiencia = new AudienceArea(pCantidadDeGrupos);
         cantidadDeGrupos = pCantidadDeGrupos;
         maxGrupos = pCantidadDeGrupos;
 
-        Config config = loadConfig("config.json");
+        Config config = Config("config.json");
         cantidadDeBannos = config.cantidadDeBannos;
         cantidadDeStore = config.cantidadDeStore;
         velocidadEntrada = config.velocidadEntrada;
         cantidadDeProductos = config.cantidadDeProductos;
+        personasPromedioPorGrupo = config.personasPorEntrada;
 
-        for (int i = 0 ; i < cantidadDeStore; i++){
-            tiendas->push_back(Store(cantidadDeProductos));
+        for (int i = 0; i < cantidadDeStore; i++)
+        {
+            tiendas->push_back(new Store(cantidadDeProductos));
         }
-        for (int i = 0 ; i < cantidadDeBannos; i++){
-            bannos->push_back(Bathroom());
-        }    
+        for (int i = 0; i < cantidadDeBannos; i++)
+        {
+            bannos->push_back(new Bathroom());
+        }
     }
 
-    // será un hilo
-    void addToBath(AttenderGroup* pAttender)
+    void addQuantityToBath(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
     {
-        while(cantidadDeGrupos > 0){
-            for (int j = 0; j < cantidadDeStore && cantidadDeGrupos > 0; j++){
-                bannos->at(j).addToWaitingQueue(pAttender);
-                cantidadDeGrupos--;
+        for(int i = 0; i < cantidadDeBannos; i++)
+        {
+            if (pQuantity - personasPromedioPorGrupo < 0)
+            {
+                bannos->at(i)->addToWaitingQueue(new AttenderGroup(pQuantity));
+                break;
             }
+            bannos->at(i)->addToWaitingQueue(new AttenderGroup(personasPromedioPorGrupo));
+            pQuantity -= personasPromedioPorGrupo;
+
         }
     }
 
-    void addToStore(AttenderGroup* pAttender)
+    void addQuantityToStore(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
     {
-        while(cantidadDeGrupos > 0){
-            for (int j = 0; j < cantidadDeBannos && cantidadDeGrupos > 0; j++){
-                tiendas->at(j).addToStoreQueue(pAttender);
-                cantidadDeGrupos--;
+        for(int i = 0; i < cantidadDeStore; i++)
+        {
+            if (pQuantity - personasPromedioPorGrupo < 0)
+            {
+                tiendas->at(i)->addToWaitingQueue(new AttenderGroup(pQuantity));
+                break;
             }
+            tiendas->at(i)->addToWaitingQueue(new AttenderGroup(personasPromedioPorGrupo));
+            pQuantity -= personasPromedioPorGrupo;
+
         }
     }
 
-    vector<Store>* getStore(){
+    void addQuantityToAudiencia(int quantity)//deber ser un hilo con tiempo de espera sacado del json
+    {
+        for (int i = 0; i < quantity; i++)
+        {
+            if (quantity - personasPromedioPorGrupo < 0)
+            {
+                audiencia->addToWaitingStack(new AttenderGroup(quantity));
+                break;
+            }
+            audiencia->addToWaitingStack(new AttenderGroup(personasPromedioPorGrupo));
+            quantity -= personasPromedioPorGrupo;
+        }
+    }
+    
+    vector<Store *> *getStore()
+    {
         return tiendas;
     }
-    vector<Bathroom>* getBathroom(){
+    vector<Bathroom *> *getBathroom()
+    {
         return bannos;
     }
-    AudienceArea* getAudienceArea(){
+    AudienceArea *getAudienceArea()
+    {
         return audiencia;
     }
-
 };

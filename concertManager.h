@@ -42,13 +42,7 @@ public:
     // será un hilo
     void takeToBath()
     {   
-<<<<<<< HEAD
-        AttenderGroup* pAttender = audienciaPrincipal->takeFromWaitingStack();
-        queueManager->addToBath(pAttender);
-        //std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));
-=======
         AttenderGroup* pAttenderGroup = audienciaPrincipal->takeFromWaitingQueue();
->>>>>>> aebfccd196382d3b9b004113f01feafab58ed056
 
         // Calcular el tamaño de cada subgrupo
         int divisorSubgrupos = pAttenderGroup->getSize()/cantidadBannos
@@ -75,10 +69,6 @@ public:
     }
     void takeToStore()
     {
-<<<<<<< HEAD
-        AttenderGroup* pAttender = audienciaPrincipal->takeFromWaitingStack();
-        queueManager->addToStore(pAttender);
-=======
         AttenderGroup* pAttenderGroup = audienciaPrincipal->takeFromWaitingQueue();
 
         // Calcular el tamaño de cada subgrupo
@@ -93,7 +83,6 @@ public:
         for (int i = 0; !subgrupos.empty();i++){
             queueManager->addToStore(subgrupos.back());
             subgrupos.pop_back();
->>>>>>> aebfccd196382d3b9b004113f01feafab58ed056
         //std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));
         }
     }

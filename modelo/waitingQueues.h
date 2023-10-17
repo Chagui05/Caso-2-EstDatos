@@ -1,4 +1,4 @@
-//Clase Abstracta para manejar las colas de espera
+// Clase Abstracta para manejar las colas de espera
 
 #ifndef _WAITINGQUEUES_
 #define _WAITINGQUEUES_ 1
@@ -8,67 +8,63 @@
 
 using namespace std;
 
-class waitingQueue 
+class waitingQueue
 {
 private:
-
     bool full;
-    bool empty;
     int maxOccupancy;
+    int promeidoPersonasPorGrupo;
     Queue<AttenderGroup> *wQueue;
-    
 
 public:
     waitingQueue(int pMaxOccupancy)
     {
+        promeidoPersonasPorGrupo = Config("config.json").personasPorEntrada;
         full = false;
-        empty = true;
         maxOccupancy = pMaxOccupancy;
         wQueue = new List<AttenderGroup>();
     }
 
-    
-    void addToWaitingQueue(AttenderGroup *attender)
+    void addToWaitingQueue(AttenderGroup *pAttenderGroup)
     {
-        if (full)
+        if (!full)
         {
-            return;
-        }
+            wQueue->enqueue(pAttenderGroup);
 
-        empty = false;
-        wQueue->enqueue(attender);
-
-        if (maxOccupancy == wQueue->getSize())
-        {
-            full = true;
+            if (maxOccupancy == wQueue->getSize())
+            {
+                full = true;
+            }
         }
     }
 
-
-    
-/*    void addQuantityToWaitingQueue(int quantity)
+    /*void addQuantityToWaitingQueue(int quantity)
     {
-        if (full)
+        if (!full && quantity < promeidoPersonasPorGrupo)
         {
-            return;
+            int personasSobrantes = promeidoPersonasPorGrupo - quantity;
+
+            AttenderGroup *grupoDePersonasSobrantes = new AttenderGroup(personasSobrantes);
+            AttenderGroup *grupoPequeño = new AttenderGroup(quantity);
+
+            wQueue->enqueue(grupoDePersonasSobrantes);
+            wQueue->enqueue(grupoPequeño);
+
+            if (maxOccupancy == wQueue->getSize())
+            {
+                full = true;
+            }
         }
-        empty = false;
-        for (int i = 0; i < quantity; i++)
-        {
-            wQueue->enqueue(new AttenderGroup());
-        }
-    }
-*/
+    }*/
     AttenderGroup *takeFromWaitingQueue()
     {
         if (!full)
         {
             return nullptr;
-        }   
+        }
         return wQueue->dequeue();
         if (0 == wQueue->getSize())
         {
-            empty = true;
             full = false;
         }
     }
@@ -82,7 +78,7 @@ public:
     {
         full = true;
     }
-    Queue<AttenderGroup>* getWaitingQueue()
+    Queue<AttenderGroup> *getWaitingQueue()
     {
         return wQueue;
     }

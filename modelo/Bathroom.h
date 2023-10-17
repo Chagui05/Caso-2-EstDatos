@@ -13,13 +13,11 @@ class Bathroom : public waitingQueue
 {
 private:
     int ID;
-    int bathCOunt;
 public:
     
     Bathroom():waitingQueue(10)
     {
         ID = rand() % (1000 + 1 - 0);
-        bathCOunt++;
     }
 
 };
