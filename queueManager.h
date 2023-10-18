@@ -50,18 +50,27 @@ public:
         }
     }
 
-    void addQuantityToBath(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
+    void addQuantityToBath(int pQuantity)
     {
-        for(int i = 0; i < cantidadDeBannos; i++)
+        std::vector<std::thread> threads;
+        for (int i = 0; i < cantidadDeBannos; i++)
         {
-            if (pQuantity - personasPromedioPorGrupo < 0)
+            int groupSize = personasPromedioPorGrupo;
+            if (pQuantity < personasPromedioPorGrupo)
             {
-                bannos->at(i)->addToWaitingQueue(new AttenderGroup(pQuantity));
-                break;
+                groupSize = pQuantity;
             }
-            bannos->at(i)->addToWaitingQueue(new AttenderGroup(personasPromedioPorGrupo));
             pQuantity -= personasPromedioPorGrupo;
 
+            threads.emplace_back([this, groupSize, i]() {
+                std::this_thread::sleep_for(chrono::seconds(velocidadEntrada));
+                bannos->at(i)->addToWaitingQueue(new AttenderGroup(groupSize));
+            });
+        }
+
+        for (auto& thread : threads)
+        {
+            thread.join();
         }
     }
 
