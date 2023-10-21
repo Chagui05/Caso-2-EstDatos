@@ -15,6 +15,7 @@ private:
     QueueManager *queueManager;
     int cantidadDeGrupos;
     List<AttenderGroup> *personasSalidas;
+    int velocidadSalida;
 
 public:
     exitManager(QueueManager *pQueueManager)
@@ -22,20 +23,33 @@ public:
         timeToExit = false;
         queueManager = pQueueManager;
         personasSalidas = new List<AttenderGroup>();
+        Config config = Config("config.json");
+        velocidadSalida = config.velocidadSalidaSort;
     }
 
     // hilo
-    List<AttenderGroup>* exit()//deber ser un hilo con tiempo de espera sacado del json
+    List<AttenderGroup>* exit()
     {
         if (timeToExit == true)
         {
-            while (queueManager->getAudienceArea()->getWaitingStack()->getSize() > 0)
+            std::vector<std::thread> threads;
+            for (int i = 0; i < queueManager->getAudienceArea()->getWaitingStack()->getSize(); i++)
             {
-                personasSalidas->enqueue(queueManager->getAudienceArea()->takeFromWaitingStack());
+                threads.emplace_back([this, i]() {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>( velocidadSalida* 1000)));
+                    AttenderGroup* grupo = queueManager->getAudienceArea()->takeFromWaitingStack();
+                    personasSalidas->enqueue(grupo);
+                });
+            }
+
+            for (auto& thread : threads)
+            {
+                thread.join();
             }
         }
         return personasSalidas;
     }
+
     void setTrueExit()
     {
         timeToExit = true;

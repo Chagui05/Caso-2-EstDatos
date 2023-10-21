@@ -18,12 +18,12 @@ private:
     int personasPorGrupo;
     int cantidadDeAttenderGroup;
     float velocidadEntrada;
-    vector<ConcertEntrance*> *entrada;
+    vector<ConcertEntrance*> entrada;
+    thread managerThread;
 
 public:
     EntranceManager()
     {
-        entrada = new vector<ConcertEntrance*>;
         Config* config = new Config("config.json");
 
         maxPersonas = config->maxPersonasEnEntrada;
@@ -34,31 +34,35 @@ public:
 
         cantidadDePersonas = rand() % (maxPersonas - minPersonas + 1) + minPersonas;
 
-        int ocupacion = (cantidadDePersonas / cantidadColasDeEntradas)+10;
+        int ocupacion = (cantidadDePersonas / cantidadColasDeEntradas) + 10;
 
         for (int i = 0; i < cantidadColasDeEntradas; i++)
         {
-            entrada->push_back(new ConcertEntrance(ocupacion));
+            entrada.push_back(new ConcertEntrance(ocupacion));
         }
+
+        // Start the manager thread
+        managerThread = thread(&EntranceManager::addToEntrance, this);
     }
 
-    void addToEntrance()//debe ser un hilo con tiempo de espera sacado del json
+    void addToEntrance()
     {
         while (cantidadDePersonas > 0)
         {
-            for (int j = 0; j < cantidadColasDeEntradas && cantidadDePersonas > 0; j++)
+            this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
+            for (int i = 0; i < cantidadColasDeEntradas; i++)
             {
-
-                entrada->at(j)->addToWaitingQueue(new AttenderGroup(personasPorGrupo));
-                cantidadDeAttenderGroup++;
-                // std::this_thread::sleep_for(std::chrono::seconds(velocidadEntrada));
-                cantidadDePersonas-=personasPorGrupo;
-                
+                if (cantidadDePersonas > 0)
+                {
+                    entrada[i]->addToWaitingQueue(new AttenderGroup(personasPorGrupo));
+                    cantidadDeAttenderGroup++;
+                    cantidadDePersonas -= personasPorGrupo;
+                }
             }
         }
     }
 
-    vector<ConcertEntrance*> *getEntrance()
+    vector<ConcertEntrance*> getEntrance()
     {
         return entrada;
     }
@@ -67,8 +71,18 @@ public:
     {
         return cantidadDePersonas;
     }
-    int cantidadDeAttenderGroup()
+
+    int getCantidadDeAttenderGroup()
     {
         return cantidadDeAttenderGroup;
+    }
+
+    // Explicitly join the manager thread when it's no longer needed
+    void joinManagerThread()
+    {
+        if (managerThread.joinable())
+        {
+            managerThread.join();
+        }
     }
 };

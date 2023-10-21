@@ -51,6 +51,8 @@ public:
         queueManager->storeToAudiencia(); // logica manejada en funcion hilo de QueueManager
     }
 
+
+//TODO:
     void sortToBathOrStore() // deber ser un hilo, usar el atributo velocidadSalidaSort
     {
         std::srand(std::time(0));

@@ -48,36 +48,34 @@ public:
         {
             bannos->push_back(new Bathroom());
         }
+        thread addQTB= thread(&QueueManager::addQuantityToBath,this);
+        thread addQTS= thread(&QueueManager::addQuantityToStore,this);
+        thread addQTA= thread(&QueueManager::addQuantityToAudiencia,this);
+        thread BTA= thread(&QueueManager::bathToAudiencia,this);
+        thread STA= thread(&QueueManager::storeToAudiencia,this);
     }
 
-    void addQuantityToBath(int pQuantity)
+   void addQuantityToBath(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
     {
-        std::vector<std::thread> threads;
-        for (int i = 0; i < cantidadDeBannos; i++)
+        for(int i = 0; i < cantidadDeBannos; i++)
         {
-            int groupSize = personasPromedioPorGrupo;
-            if (pQuantity < personasPromedioPorGrupo)
+            this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
+            if (pQuantity - personasPromedioPorGrupo < 0)
             {
-                groupSize = pQuantity;
+                bannos->at(i)->addToWaitingQueue(new AttenderGroup(pQuantity));
+                break;
             }
+            bannos->at(i)->addToWaitingQueue(new AttenderGroup(personasPromedioPorGrupo));
             pQuantity -= personasPromedioPorGrupo;
 
-            threads.emplace_back([this, groupSize, i]() {
-                std::this_thread::sleep_for(chrono::seconds(velocidadEntrada));
-                bannos->at(i)->addToWaitingQueue(new AttenderGroup(groupSize));
-            });
-        }
-
-        for (auto& thread : threads)
-        {
-            thread.join();
         }
     }
 
-    void addQuantityToStore(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
+   void addQuantityToStore(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
     {
         for(int i = 0; i < cantidadDeStore; i++)
         {
+            this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             if (pQuantity - personasPromedioPorGrupo < 0)
             {
                 tiendas->at(i)->addToWaitingQueue(new AttenderGroup(pQuantity));
@@ -93,6 +91,7 @@ public:
     {
         for (int i = 0; i < quantity; i++)
         {
+            this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             if (quantity - personasPromedioPorGrupo < 0)
             {
                 audiencia->addToWaitingStack(new AttenderGroup(quantity));
@@ -107,9 +106,9 @@ public:
     {
         for (int i = 0; i < bannos->size(); i++)
         {
+            this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             AttenderGroup *grupo = bannos->at(i)->takeFromWaitingQueue();
             audiencia->addToWaitingStack(grupo);
-            // std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
         }
     }
 
@@ -117,9 +116,9 @@ public:
     {
         for (int i = 0; i < tiendas->size(); i++)
         {
+            this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             AttenderGroup *grupo = tiendas->at(i)->takeFromWaitingQueue();
             audiencia->addToWaitingStack(grupo);
-            // std::this_thread::sleep_for(std::chrono::seconds(velocidadSalidaSort));
         }
     }
     
