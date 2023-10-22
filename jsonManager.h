@@ -33,6 +33,7 @@ struct Config {
 Config (std::string configFile) {
 
     // Leer el JSON desde un archivo
+    
     std::ifstream jsonFile(configFile);
     json jsonData;
     jsonFile >> jsonData;

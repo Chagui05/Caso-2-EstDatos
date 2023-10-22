@@ -20,25 +20,24 @@ private:
     double posibilidadGramilla;
     double posibilidadBanno;
     double posibilidadTienda;
-    vector<ConcertEntrance *> *colasActivas;
     QueueManager *queueManager;
     // elementos donde se sortea
 
 public:
-    SortManager(vector<ConcertEntrance *> *pColasActivas, int pPersonasPorEntrar, int gruposPorEntrar)
+    SortManager(int pPersonasPorEntrar, int gruposPorEntrar)
     {
-
-        colasActivas = pColasActivas;
         personasPorEntrar = pPersonasPorEntrar;
 
         queueManager = new QueueManager(gruposPorEntrar+100);
-
+    
         Config config = Config("config.json");
 
         velocidadSalidaSort = config.velocidadSalidaSort;
         posibilidadGramilla = config.posibilidadGramilla;
         posibilidadBanno = config.posibilidadBanno;
         posibilidadTienda = config.posibilidadTienda;
+        cout<<"SortManager instanciado"<<endl;
+        
     }
 
     void sortToBathStoreOrAudience()
@@ -48,9 +47,11 @@ public:
         int aStore = floor(personasPorEntrar * posibilidadTienda);
         aAudiencia += personasPorEntrar - (aAudiencia + aBanno + aStore); // como arriba se esta diviendo exacto, van a faltar personas, por lo que se le agrega a audiencia
 
-        queueManager->addQuantityToBath(aBanno); // logica manejada en funcion hilo de QueueManager
-        queueManager->addQuantityToStore(aStore);        // logica manejada en funcion hilo de QueueManager
-        queueManager->addQuantityToAudiencia(aAudiencia);// logica manejada en funcion hilo de QueueManager
+        // queueManager->addQuantityToBath(aBanno); // logica manejada en funcion hilo de QueueManager
+        // queueManager->addQuantityToStore(aStore);        // logica manejada en funcion hilo de QueueManager
+        // queueManager->addQuantityToAudiencia(aAudiencia);// logica manejada en funcion hilo de QueueManager
+        
+        queueManager->startThreads(aBanno);
     }
 
 

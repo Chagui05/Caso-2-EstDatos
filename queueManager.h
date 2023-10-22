@@ -20,15 +20,15 @@ private:
     int maxGrupos;
     int personasPromedioPorGrupo;
     float velocidadEntrada;
-    vector<Store*> *tiendas;
-    vector<Bathroom*> *bannos;
+    vector<Store *> *tiendas;
+    vector<Bathroom *> *bannos;
     AudienceArea *audiencia;
 
 public:
     QueueManager(int pCantidadDeGrupos)
     {
-        tiendas = new vector<Store*>;
-        bannos = new vector<Bathroom*>;
+        tiendas = new vector<Store *>;
+        bannos = new vector<Bathroom *>;
         audiencia = new AudienceArea(pCantidadDeGrupos);
         cantidadDeGrupos = pCantidadDeGrupos;
         maxGrupos = pCantidadDeGrupos;
@@ -48,48 +48,58 @@ public:
         {
             bannos->push_back(new Bathroom());
         }
-        thread BTA= thread(&QueueManager::bathToAudiencia,this);
-        thread STA= thread(&QueueManager::storeToAudiencia,this);
     }
 
-   void addQuantityToBath(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
+    void startThreads(int pQuantity)
     {
-        thread addQTB= thread(&QueueManager::addQuantityToBath,this, pQuantity);
-        for(int i = 0; i < cantidadDeBannos; i++)
+        // thread BTA = thread(&QueueManager::bathToAudiencia, this);
+        // thread STA = thread(&QueueManager::storeToAudiencia, this);
+        thread addQTB = thread(&QueueManager::addQuantityToBath, this, pQuantity);
+
+        // BTA.join(); // Esperar a que el hilo BTA termine
+        // STA.join(); // Esperar a que el hilo STA termine
+        addQTB.join(); // Esperar a que el hilo addQTB termine
+    }
+
+    void addQuantityToBath(int pQuantity) // deber ser un hilo con tiempo de espera sacado del json
+    {
+        for (int i = 0; i < cantidadDeBannos; i++)
         {
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             if (pQuantity - personasPromedioPorGrupo < 0)
             {
                 bannos->at(i)->addToWaitingQueue(new AttenderGroup(pQuantity));
+                cout << "Agregando a bannos "<<pQuantity<<" personas"  << endl;
                 break;
             }
             bannos->at(i)->addToWaitingQueue(new AttenderGroup(personasPromedioPorGrupo));
+            cout << "Agregando a bannos "<<personasPromedioPorGrupo<<" personas"  << endl;
             pQuantity -= personasPromedioPorGrupo;
-
         }
     }
 
-   void addQuantityToStore(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
+    void addQuantityToStore(int pQuantity) // deber ser un hilo con tiempo de espera sacado del json
     {
-        thread addQTS= thread(&QueueManager::addQuantityToStore,this, pQuantity);
+        thread addQTS = thread(&QueueManager::addQuantityToStore, this, pQuantity);
 
-        for(int i = 0; i < cantidadDeStore; i++)
+        for (int i = 0; i < cantidadDeStore; i++)
         {
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             if (pQuantity - personasPromedioPorGrupo < 0)
             {
                 tiendas->at(i)->addToWaitingQueue(new AttenderGroup(pQuantity));
+                cout << "Agregando a tiendas "<<pQuantity<<" personas"  << endl;
                 break;
             }
             tiendas->at(i)->addToWaitingQueue(new AttenderGroup(personasPromedioPorGrupo));
+            cout << "Agregando a tiendas "<<personasPromedioPorGrupo<<" personas"  << endl;
             pQuantity -= personasPromedioPorGrupo;
-
         }
     }
 
-    void addQuantityToAudiencia(int quantity)//deber ser un hilo con tiempo de espera sacado del json
+    void addQuantityToAudiencia(int quantity) // deber ser un hilo con tiempo de espera sacado del json
     {
-        thread addQTA= thread(&QueueManager::addQuantityToAudiencia,this, quantity);
+        thread addQTA = thread(&QueueManager::addQuantityToAudiencia, this, quantity);
 
         for (int i = 0; i < quantity; i++)
         {
@@ -97,33 +107,47 @@ public:
             if (quantity - personasPromedioPorGrupo < 0)
             {
                 audiencia->addToWaitingStack(new AttenderGroup(quantity));
+                cout << "Agregando a audiencia "<<quantity<<" personas"  << endl;
                 break;
             }
             audiencia->addToWaitingStack(new AttenderGroup(personasPromedioPorGrupo));
+            cout << "Agregando a audiencia "<<personasPromedioPorGrupo<<" personas"  << endl;
             quantity -= personasPromedioPorGrupo;
         }
     }
 
-    void bathToAudiencia()//deber ser un hilo con tiempo de espera sacado del json
+    void bathToAudiencia() // deber ser un hilo con tiempo de espera sacado del json
     {
+        cout << "Thread BTA"  << endl;
         for (int i = 0; i < bannos->size(); i++)
         {
+            if(bannos->at(i)->getWaitingQueue()->getSize() == 0)
+            {
+                break;
+            }
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             AttenderGroup *grupo = bannos->at(i)->takeFromWaitingQueue();
+            cout << "se sacaron "<<grupo->getSize()<<" personas de Banno"  << endl;
             audiencia->addToWaitingStack(grupo);
         }
     }
 
-    void storeToAudiencia()//deber ser un hilo con tiempo de espera sacado del json
+    void storeToAudiencia() // deber ser un hilo con tiempo de espera sacado del json
     {
+        cout << "Thread STA"  << endl;
         for (int i = 0; i < tiendas->size(); i++)
         {
+            if(tiendas->at(i)->getWaitingQueue()->getSize() == 0)
+            {
+                break;
+            }
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
             AttenderGroup *grupo = tiendas->at(i)->takeFromWaitingQueue();
+            cout << "se sacaron "<<grupo->getSize()<<" personas de tienda"  << endl;
             audiencia->addToWaitingStack(grupo);
         }
     }
-    
+
     vector<Store *> *getStore()
     {
         return tiendas;
