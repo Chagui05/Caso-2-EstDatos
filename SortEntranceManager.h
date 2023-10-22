@@ -51,7 +51,9 @@ public:
         // queueManager->addQuantityToStore(aStore);        // logica manejada en funcion hilo de QueueManager
         // queueManager->addQuantityToAudiencia(aAudiencia);// logica manejada en funcion hilo de QueueManager
         
-        queueManager->startThreads(aBanno);
+        queueManager->addQTBAux(aBanno);
+        queueManager->addQTSAux(aStore);
+        queueManager->addQTAAux(aAudiencia);
     }
 
 
