@@ -29,7 +29,7 @@ public:
         velocidadEntrada = config->velocidadEntrada;
         cantidadColasDeEntradas = config->cantidadDeColasEntrada;
         personasPorGrupo = config->personasPorEntrada;
-
+        
         cantidadDePersonas = rand() % (maxPersonas - minPersonas + 1) + minPersonas;
 
         int ocupacion = (cantidadDePersonas / cantidadColasDeEntradas) + 10;

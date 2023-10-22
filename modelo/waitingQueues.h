@@ -62,11 +62,11 @@ public:
         {
             return nullptr;
         }
-        return wQueue->dequeue();
         if (0 == wQueue->getSize())
         {
             full = false;
         }
+        return wQueue->dequeue();
     }
 
     bool getFull()

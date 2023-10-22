@@ -34,6 +34,7 @@ public:
     {
         AttenderGroup *grupo = queueManager->getAudienceArea()->takeFromWaitingStack();
         queueManager->addQuantityToBath(grupo->getSize()); // logica manejada en funcion hilo de QueueManager
+        // con un for queueManager->getBathroom()->at(i)->addToWaitingQueue(grupo); // logica manejada en funcion hilo de QueueManager
     }
 
     void addToAudienciaFromBath()

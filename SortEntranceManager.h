@@ -50,7 +50,10 @@ public:
         // queueManager->addQuantityToBath(aBanno); // logica manejada en funcion hilo de QueueManager
         // queueManager->addQuantityToStore(aStore);        // logica manejada en funcion hilo de QueueManager
         // queueManager->addQuantityToAudiencia(aAudiencia);// logica manejada en funcion hilo de QueueManager
-        
+        cout<<"van a entrar a banno: "<<  aBanno<< " personas"<<endl;
+        cout<<"van a entrar a audiencia: "<<  aAudiencia<< " personas"<<endl;
+        cout<<"van a entrar a store: "<<  aStore<< " personas"<<endl<<endl;
+
         queueManager->addQTBAux(aBanno);
         queueManager->addQTSAux(aStore);
         queueManager->addQTAAux(aAudiencia);
