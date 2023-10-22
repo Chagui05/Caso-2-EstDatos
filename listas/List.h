@@ -55,7 +55,7 @@ public:
         if (size > 0)
         {
             this->last->setNext(newNode);
-            newNode->setPrev(this->last); 
+            newNode->setPrevious(this->last); 
         }
         else
         {
@@ -76,15 +76,15 @@ public:
             T *result = find(pPosition);
 
             newNodo->setNext(searchPosition);
-            if (searchPosition->getPrev() != NULL)
+            if (searchPosition->getPrevious() != NULL)
             {                                                
-                searchPosition->getPrev()->setNext(newNodo); 
-                newNodo->setPrev(searchPosition->getPrev());
-                searchPosition->setPrev(newNodo);
+                searchPosition->getPrevious()->setNext(newNodo); 
+                newNodo->setPrevious(searchPosition->getPrevious());
+                searchPosition->setPrevious(newNodo);
             }
             else
             {
-                this->first->setPrev(newNodo); 
+                this->first->setPrevious(newNodo); 
                 this->first = newNodo;
             }
 
@@ -116,18 +116,18 @@ public:
             {
                 T *data = find(pPosition);
 
-                searchPosition->getPrev()->setNext(searchPosition->getNext()); 
+                searchPosition->getPrevious()->setNext(searchPosition->getNext()); 
 
                 if (searchPosition == last)
                 {
-                    last = searchPosition->getPrev(); 
+                    last = searchPosition->getPrevious(); 
                 }
                 else
                 {
-                    searchPosition->getNext()->setPrev(searchPosition->getPrev()); 
+                    searchPosition->getNext()->setPrevious(searchPosition->getPrevious()); 
                 }
                 searchPosition->setNext(NULL);
-                searchPosition->setPrev(NULL);
+                searchPosition->setPrevious(NULL);
 
                 result = searchPosition->getData();
             }
@@ -138,7 +138,7 @@ public:
 
                 if (first != NULL)
                 { 
-                    first->setPrev(NULL);
+                    first->setPrevious(NULL);
                 }
                 else
                 {
