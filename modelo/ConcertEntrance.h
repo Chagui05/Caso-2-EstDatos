@@ -1,7 +1,7 @@
 #ifndef _CONCERTENTRANCE_
 #define _CONCERTENTRANCE_ 1
 #include <string>
-#include "listas/List.h"
+#include "../listas/List.h"
 #include "attender.h"
 #include "waitingQueues.h"
 

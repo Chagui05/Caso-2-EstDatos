@@ -76,13 +76,4 @@ public:
     {
         return cantidadDeAttenderGroup;
     }
-
-    // Explicitly join the manager thread when it's no longer needed
-    void joinManagerThread()
-    {
-        if (managerThread.joinable())
-        {
-            managerThread.join();
-        }
-    }
 };

@@ -2,7 +2,7 @@
 #ifndef _STORE_
 #define _STORE_ 1
 #include <string>
-#include "listas/List.h"
+#include "../listas/List.h"
 #include "attender.h"
 #include "waitingQueues.h"
 

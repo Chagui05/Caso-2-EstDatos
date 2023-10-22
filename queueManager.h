@@ -2,10 +2,10 @@
 #include <fstream>
 #include <thread>
 #include "jsonManager.h"
-#include "Store.h"
-#include "Bathroom.h"
-#include "AudienceArea.h"
-#include "attender.h"
+#include "modelo/Store.h"
+#include "modelo/Bathroom.h"
+#include "modelo/AudienceArea.h"
+#include "modelo/attender.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -48,15 +48,13 @@ public:
         {
             bannos->push_back(new Bathroom());
         }
-        thread addQTB= thread(&QueueManager::addQuantityToBath,this);
-        thread addQTS= thread(&QueueManager::addQuantityToStore,this);
-        thread addQTA= thread(&QueueManager::addQuantityToAudiencia,this);
         thread BTA= thread(&QueueManager::bathToAudiencia,this);
         thread STA= thread(&QueueManager::storeToAudiencia,this);
     }
 
    void addQuantityToBath(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
     {
+        thread addQTB= thread(&QueueManager::addQuantityToBath,this, pQuantity);
         for(int i = 0; i < cantidadDeBannos; i++)
         {
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
@@ -73,6 +71,8 @@ public:
 
    void addQuantityToStore(int pQuantity)//deber ser un hilo con tiempo de espera sacado del json
     {
+        thread addQTS= thread(&QueueManager::addQuantityToStore,this, pQuantity);
+
         for(int i = 0; i < cantidadDeStore; i++)
         {
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
@@ -89,6 +89,8 @@ public:
 
     void addQuantityToAudiencia(int quantity)//deber ser un hilo con tiempo de espera sacado del json
     {
+        thread addQTA= thread(&QueueManager::addQuantityToAudiencia,this, quantity);
+
         for (int i = 0; i < quantity; i++)
         {
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));

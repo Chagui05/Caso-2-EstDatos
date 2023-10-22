@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "jsonManager.h"
-#include "ConcertEntrance.h"
+#include "modelo/ConcertEntrance.h"
 #include "queueManager.h"
 
 using namespace std;

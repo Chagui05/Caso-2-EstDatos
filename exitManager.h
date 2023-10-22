@@ -25,29 +25,20 @@ public:
         personasSalidas = new List<AttenderGroup>();
         Config config = Config("config.json");
         velocidadSalida = config.velocidadSalidaSort;
+        thread extiThread = thread(&exitManager::exit,this);
     }
 
     // hilo
-    List<AttenderGroup>* exit()
-    {
-        if (timeToExit == true)
-        {
-            std::vector<std::thread> threads;
-            for (int i = 0; i < queueManager->getAudienceArea()->getWaitingStack()->getSize(); i++)
-            {
-                threads.emplace_back([this, i]() {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>( velocidadSalida* 1000)));
-                    AttenderGroup* grupo = queueManager->getAudienceArea()->takeFromWaitingStack();
-                    personasSalidas->enqueue(grupo);
-                });
-            }
-
-            for (auto& thread : threads)
-            {
-                thread.join();
-            }
+    List<AttenderGroup>* exit(){
+        while (true){
+            if (timeToExit == true){
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>( velocidadSalida* 1000)));
+                AttenderGroup* grupo = queueManager->getAudienceArea()->takeFromWaitingStack();
+                personasSalidas->enqueue(grupo);
+                };
         }
         return personasSalidas;
+    
     }
 
     void setTrueExit()

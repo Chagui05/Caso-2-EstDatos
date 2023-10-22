@@ -3,7 +3,7 @@
 #ifndef _WAITINGQUEUES_
 #define _WAITINGQUEUES_ 1
 #include <string>
-#include "listas/List.h"
+#include "../listas/List.h"
 #include "attender.h"
 
 using namespace std;

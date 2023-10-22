@@ -4,7 +4,7 @@
 #define _AUDIENCEAREA_ 1
 #include <string>
 #include <thread>
-#include "listas/List.h"
+#include "../listas/List.h"
 #include "attender.h"
 
 using namespace std;

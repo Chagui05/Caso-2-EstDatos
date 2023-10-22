@@ -27,6 +27,7 @@ public:
         velocidadSalidaSort = config.velocidadSalidaSort;
         posibilidadBanno = config.posibilidadBanno;
         posibilidadTienda = config.posibilidadTienda;
+        
     }
 
     void takeToBath()
@@ -52,8 +53,7 @@ public:
     }
 
 
-//TODO:
-    void sortToBathOrStore() // deber ser un hilo, usar el atributo velocidadSalidaSort
+    void sortToBathOrStore()
     {
         std::srand(std::time(0));
         double aleatorio = static_cast<double>(std::rand()) / RAND_MAX;
