@@ -48,17 +48,26 @@ public:
         {
             bannos->push_back(new Bathroom());
         }
+        thread BTA = thread(&QueueManager::bathToAudiencia,this);
+        thread STA = thread(&QueueManager::storeToAudiencia,this);
     }
 
-    void startThreads(int pQuantity)
+    void addQTBAux(int pQuantity)
     {
-        // thread BTA = thread(&QueueManager::bathToAudiencia, this);
-        // thread STA = thread(&QueueManager::storeToAudiencia, this);
-        thread addQTB = thread(&QueueManager::addQuantityToBath, this, pQuantity);
 
-        // BTA.join(); // Esperar a que el hilo BTA termine
-        // STA.join(); // Esperar a que el hilo STA termine
+        thread addQTB = thread(&QueueManager::addQuantityToBath, this, pQuantity);
         addQTB.join(); // Esperar a que el hilo addQTB termine
+        return;
+    }
+    void addQTSAux(int pQuantity){
+        thread addQTS = thread(&QueueManager::addQuantityToStore, this, pQuantity);
+        addQTS.join(); // Esperar a que el hilo addQTS termine
+        return;
+    }
+    void addQTAAux(int pQuantity){
+        thread addQTA = thread(&QueueManager::addQuantityToAudiencia, this, pQuantity);
+        addQTA.join(); // Esperar a que el hilo addQTA termine
+        return;
     }
 
     void addQuantityToBath(int pQuantity) // deber ser un hilo con tiempo de espera sacado del json
@@ -80,7 +89,6 @@ public:
 
     void addQuantityToStore(int pQuantity) // deber ser un hilo con tiempo de espera sacado del json
     {
-        thread addQTS = thread(&QueueManager::addQuantityToStore, this, pQuantity);
 
         for (int i = 0; i < cantidadDeStore; i++)
         {
