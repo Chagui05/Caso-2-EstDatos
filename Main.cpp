@@ -13,12 +13,14 @@ int main (){
     std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 
 
-    cout << sorter->getQueueManager()->getAudienceArea()->getWaitingStack()->getSize() <<endl;
-    cout << sorter->getQueueManager()->getBathroom()->at(1)->getWaitingQueue()->getSize()<<endl;
-    cout << sorter->getQueueManager()->getStore()->at(1)->getWaitingQueue()->getSize()<<endl;
+    cout <<"Personas en audienceArea: " << sorter->getQueueManager()->getAudienceArea()->getAttenderNum() <<endl;
+    cout << "Personas en bathroom: "<< sorter->getQueueManager()->getBathroom()->at(1)->getWaitingQueue()->getSize()<<endl;
+    cout << "Personas en store: "<< sorter->getQueueManager()->getStore()->at(1)->getAttenderNum()<<endl;
     cout <<sorter->getQueueManager()->tiendaVacia()<<endl;
 
    sorter->getQueueManager()->threadsConWhileTrue();
 
    
 }
+
+//?g++ -std=c++11 -o main main.cpp -lpthread

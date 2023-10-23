@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <thread>
+#include <chrono>
 #include "jsonManager.h"
 #include "modelo/Store.h"
 #include "modelo/Bathroom.h"
@@ -118,18 +119,28 @@ public:
     void addQuantityToAudiencia(int quantity) // deber ser un hilo con tiempo de espera sacado del json
     {
 
-        for (int i = 0; i < quantity; i++)
+        for (int i = 0; quantity > 0; i++)
         {
+            cout<<endl;
+            auto startTime = std::chrono::high_resolution_clock::now();
             this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
-            if (quantity - personasPromedioPorGrupo < 0)
+            if (quantity < personasPromedioPorGrupo && quantity > 0)
             {
                 audiencia->addToWaitingStack(new AttenderGroup(quantity));
-                cout << "Agregando a audiencia " << quantity << " personas" << endl;
+                cout << "Agregando a audiencia: " << quantity << " personas" << endl;
+                cout << "Personas en audiencia: " << audiencia->getAttenderNum() << endl;
+                auto endTime = std::chrono::high_resolution_clock::now();   
+                auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+                cout << "Time elapsed in the thread: " << duration.count() << " ms" << std::endl;
                 break;
             }
             audiencia->addToWaitingStack(new AttenderGroup(personasPromedioPorGrupo));
             cout << "Agregando a audiencia " << personasPromedioPorGrupo << " personas" << endl;
+            cout << "Personas en audiencia: " << audiencia->getAttenderNum() << endl;
             quantity -= personasPromedioPorGrupo;
+            auto endTime = std::chrono::high_resolution_clock::now();   
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+            cout << "Tiempo promedio en el hilo: " << duration.count() << " ms" << std::endl;
         }
     }
 
@@ -147,7 +158,7 @@ public:
                 }
                 this_thread::sleep_for(chrono::milliseconds(static_cast<int>(velocidadEntrada * 1000)));
                 AttenderGroup *grupo = bannos->at(i)->takeFromWaitingQueue();
-                cout << "se sacaron " << grupo->getSize() << " personas de Banno" << endl;
+                cout << "se sacaron " << (grupo->getSize()) << " personas de Banno" << endl;
                 audiencia->addToWaitingStack(grupo);
             }
         }

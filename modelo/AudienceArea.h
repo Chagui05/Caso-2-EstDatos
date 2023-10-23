@@ -17,6 +17,7 @@ private:
     bool empty;
     int maxOccupancy;
     Stack<AttenderGroup> *wStack;
+    int attenderNum = 0;
 
 public:
         
@@ -37,6 +38,7 @@ public:
         }
         empty = false;
         wStack->push(attender);
+        attenderNum+=attender->getSize();
     }
     
     //hilo
@@ -82,6 +84,9 @@ public:
         return wStack;
     }
 
+    int getAttenderNum(){
+        return attenderNum;
+    }
 
 };
 #endif

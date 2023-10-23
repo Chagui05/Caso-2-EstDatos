@@ -14,6 +14,7 @@ private:
     int productCount;
     bool outOfStock;
     bool open;
+    int attenderNum = 0;
 
 public:
 
@@ -31,6 +32,7 @@ public:
         if (open)
         {
             addToWaitingQueue(attender);   
+            attenderNum+=attender->getSize();
         }
     }
     
@@ -41,8 +43,11 @@ public:
            outOfStock = true;
            return;
         }
+        attenderNum-=this->getWaitingQueue()->getSize();
         takeFromWaitingQueue();
         productCount--; // <-- eso hacerlo con vector pila luego 
+
+
     }
 
     void fillStore()
@@ -50,7 +55,11 @@ public:
         productCount = 50;
         outOfStock = false;
     }
-    
+
+    int getAttenderNum(){
+        return attenderNum;
+    }
+
 };
 
 #endif
